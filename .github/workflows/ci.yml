@@ -1,4 +1,5 @@
-name: Python Autotests CI
+
+name: CI Pipelinename: Python Autotests CI
 
 on:
   pull_request:
