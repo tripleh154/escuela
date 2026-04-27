@@ -1,0 +1,30 @@
+name: CI Pipeline
+
+# 1. El disparador
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+# 2. La definición de qué hacer
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest # El servidor donde corre el test
+
+    steps:
+      # Paso indispensable: Copiar tu código al servidor de GitHub
+      - name: Checkout de código
+        uses: actions/checkout@v4
+
+      # Configurar el entorno (Ejemplo para C# / .NET)
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # Restaurar dependencias (como los paquetes NuGet)
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # El comando que realmente ejecuta tus pruebas
+      - name: Execute Tests
+        run: dotnet test --no-restore --verbosity normal
